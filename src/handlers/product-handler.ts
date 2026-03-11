@@ -65,3 +65,26 @@ export const GetProduct = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const DeleteProduct = async (req: Request, res: Response) => {
+    const validation = ProductIdValidator.validate(req.params)
+    if (validation.error) {
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+    const productIdRequest = validation.value
+
+    const productUsecase = new ProductUsecase(AppDataSource.getRepository(Product));
+    try{
+        const productDeleted = await productUsecase.deleteProduct(productIdRequest.id);
+        if (productDeleted === null) {
+            return res.status(404).send({
+                error: "product not found"
+            })
+        }
+        return res.send(productDeleted);
+    }catch(error) {
+        return res.status(500).send({
+            error: "Internal Server Error"
+        })
+    }
+}

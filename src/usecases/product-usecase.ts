@@ -6,7 +6,7 @@ import { ResourceConflictError } from "./error.js";
 export class ProductUsecase {
     constructor(
         private productRepository: Repository<Product>
-    ) {}
+    ) { }
 
     async createProduct(name: string, price: number): Promise<Product> {
         try {
@@ -15,7 +15,7 @@ export class ProductUsecase {
                 price
             })
             return await this.productRepository.save(product);
-        } catch(error) {
+        } catch (error) {
             if ((error as QueryError).code === "ER_DUP_ENTRY") {
                 throw new ResourceConflictError("error name is already taken")
             }
@@ -28,9 +28,19 @@ export class ProductUsecase {
         return this.productRepository.find();
     }
 
-    async getProduct(id: number): Promise<Product|null> {
+    async getProduct(id: number): Promise<Product | null> {
         return await this.productRepository.findOneBy({
             id
         });
+    }
+
+    async deleteProduct(id: number): Promise<Product | null> {
+        const product = await this.getProduct(id);
+        if (product === null) {
+            return null;
+        }
+        await this.productRepository.softRemove(product);
+
+        return product
     }
 }

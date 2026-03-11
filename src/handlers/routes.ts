@@ -1,5 +1,5 @@
 import { Application, Request, Response } from "express";
-import { CreateProduct, GetProduct, ListProducts } from "./product-handler.js";
+import { CreateProduct, DeleteProduct, GetProduct, ListProducts } from "./product-handler.js";
 
 export const initHandlers = (app: Application) => {
     app.get("/", (req, res) => {
@@ -11,4 +11,5 @@ export const initHandlers = (app: Application) => {
     app.get("/products/:id", GetProduct)
     app.get("/products", ListProducts)
     app.post("/products", CreateProduct)
+    app.delete("/products/:id", DeleteProduct)
 } 
