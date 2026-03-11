@@ -1,4 +1,5 @@
 import { Application, Request, Response } from "express";
+import { CreateProduct } from "./product-handler.js";
 
 export const initHandlers = (app: Application) => {
     app.get("/", (req, res) => {
@@ -7,11 +8,5 @@ export const initHandlers = (app: Application) => {
         })
     })
 
-    app.get("/products", (req: Request, res: Response) => {
-        return res.send([
-            {id: 1, name:"courgette"},
-            {id: 2, name:"pomme"},
-            {id: 3, name:"ail"}
-        ])
-    })
+    app.post("/products", CreateProduct)
 } 

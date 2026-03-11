@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Product {
@@ -17,17 +17,22 @@ export class Product {
     @UpdateDateColumn()
     updatedAt: Date
 
+    @DeleteDateColumn()
+    deletedAt: Date
+
     constructor(
         id: number,
         name: string,
         price: number,
         createdAt: Date,
-        updatedAt: Date
+        updatedAt: Date,
+        deletedAt: Date
     ) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
     }
 }
