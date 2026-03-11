@@ -17,5 +17,6 @@ export const UpdateProductValidator = Joi.object<UpdateProductRequest>({
 
 export const ListProductValidator = Joi.object<ListProductRequest>({
     page: Joi.number().min(1).optional(),
-    size: Joi.number().min(1).max(100).optional()
+    size: Joi.number().min(1).max(100).optional(),
+    priceMax: Joi.number().min(1).optional()
 }).options({abortEarly: false})

@@ -16,5 +16,6 @@ export interface UpdateProductRequest {
 export interface ListProductRequest {
     page?: number
     size?: number
+    priceMax?: number
 }
 

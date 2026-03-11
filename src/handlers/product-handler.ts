@@ -49,7 +49,11 @@ export const ListProducts = async (req: Request, res: Response) => {
 
     const productUsecase = new ProductUsecase(AppDataSource.getRepository(Product));
     try {
-        const product = await productUsecase.listProducts(page, size);
+        const product = await productUsecase.listProducts({
+            page,
+            size,
+            priceMax: listProductRequest.priceMax
+        });
         return res.send(product);
     } catch (error: unknown) {
         return res.status(500).send({

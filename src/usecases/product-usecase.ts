@@ -11,6 +11,12 @@ export interface ListResponse<T> {
     totalPages: number;
 }
 
+export interface ListProductFilter {
+    page: number,
+    size: number,
+    priceMax?: number | undefined
+}
+
 export class ProductUsecase {
     constructor(
         private productRepository: Repository<Product>
@@ -32,8 +38,11 @@ export class ProductUsecase {
         }
     }
 
-    async listProducts(page: number, size: number): Promise<ListResponse<Product>> {
+    async listProducts({ page, size, priceMax }: ListProductFilter): Promise<ListResponse<Product>> {
         const query = this.productRepository.createQueryBuilder()
+        if (priceMax !== undefined) {
+            query.andWhere("price <= :priceMax", { priceMax })
+        }
         query.skip((page - 1) * size)
         query.take(size)
 
