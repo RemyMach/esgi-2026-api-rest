@@ -18,6 +18,6 @@ export const initHandlers = (app: Application) => {
 
     app.post("/users", CreateUser)
 
-    app.post("/login", Login)
+    app.post("/auth/login", Login)
 
 }
